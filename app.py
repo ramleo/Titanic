@@ -4,6 +4,7 @@ FastAPI app serving the trained SVC classification pipeline.
 """
 
 import re
+from pathlib import Path
 from typing import List, Optional
 
 import joblib
@@ -14,9 +15,10 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-# ── Load pipeline & label encoder ────────────────────────────────────────────
-PIPELINE = joblib.load("models/final_pipeline.pkl")
-LABEL_ENCODER = joblib.load("models/label_encoder.pkl")
+# ── Resolve paths relative to this file so they work regardless of CWD ───────
+_ROOT = Path(__file__).resolve().parent
+PIPELINE      = joblib.load(_ROOT / "models" / "final_pipeline.pkl")
+LABEL_ENCODER = joblib.load(_ROOT / "models" / "label_encoder.pkl")
 
 MODEL_NAME = type(PIPELINE.named_steps["model"]).__name__
 MODEL_ACCURACY = 0.8436  # Test-set accuracy from training run

@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: titanic-ml
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python src/preprocess.py && python src/train.py
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"

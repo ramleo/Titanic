@@ -43,7 +43,7 @@ ENV/
 logs/
 
 # ML template — per-run artifacts (not committed in template repo)
-data/*.csv
+# data/*.csv  ← Titanic-Dataset.csv is committed for cloud build (Render)
 models/*.pkl
 models/*.npy
 plots/*.png

@@ -16,15 +16,17 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report
 
-PROJECT_ROOT = "/Users/wrks/Downloads/Claude-documentation/ML-Titanic/Titanic_20260525_084931"
+import os
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODELS_DIR   = os.path.join(PROJECT_ROOT, "models")
 
 # ── 1. Load artifacts ──────────────────────────────────────────────────────────
-X_train_raw   = joblib.load(f"{PROJECT_ROOT}/models/X_train_raw.pkl")
-X_test_raw    = joblib.load(f"{PROJECT_ROOT}/models/X_test_raw.pkl")
-y_train       = np.load(f"{PROJECT_ROOT}/models/y_train.npy")
-y_test        = np.load(f"{PROJECT_ROOT}/models/y_test.npy")
-preprocessor  = joblib.load(f"{PROJECT_ROOT}/models/preprocessor.pkl")
-label_encoder = joblib.load(f"{PROJECT_ROOT}/models/label_encoder.pkl")
+X_train_raw   = joblib.load(os.path.join(MODELS_DIR, "X_train_raw.pkl"))
+X_test_raw    = joblib.load(os.path.join(MODELS_DIR, "X_test_raw.pkl"))
+y_train       = np.load(os.path.join(MODELS_DIR, "y_train.npy"))
+y_test        = np.load(os.path.join(MODELS_DIR, "y_test.npy"))
+preprocessor  = joblib.load(os.path.join(MODELS_DIR, "preprocessor.pkl"))
+label_encoder = joblib.load(os.path.join(MODELS_DIR, "label_encoder.pkl"))
 
 print(f"X_train_raw shape : {X_train_raw.shape}")
 print(f"X_test_raw  shape : {X_test_raw.shape}")
@@ -117,6 +119,6 @@ print("\nClassification Report:")
 print(report)
 
 # ── 7. Save final pipeline ─────────────────────────────────────────────────────
-out_path = f"{PROJECT_ROOT}/models/final_pipeline.pkl"
+out_path = os.path.join(MODELS_DIR, "final_pipeline.pkl")
 joblib.dump(best_pipeline, out_path)
 print(f"final_pipeline.pkl saved → {out_path}")
